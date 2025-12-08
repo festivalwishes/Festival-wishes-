@@ -1,213 +1,285 @@
-<!DOCTYPE html>
+<!--
+  Festival Wishes - Single File SPA
+  ---------------------------------
+  - This single `index.html` contains a homepage, seasonal grouping, and a festival page for each festival.
+  - Each festival has 10 video slots and 10 card slots. Replace placeholder filenames with your actual media files in the `media/` folder or push files next to this index.html in your repo.
+
+  How to use:
+  1. Save this file as `index.html` at the root of your repository.
+  2. Create a `media/` folder (optional) and upload videos and images with names matching the `data` object below OR update the filenames in the `data` object.
+     Example expected file paths:
+       media/diwali/video-1.mp4
+       media/diwali/card-1.jpg
+  3. Commit & push. GitHub Pages will serve the SPA at `https://<username>.github.io/<repo>/`.
+
+  Notes:
+  - Filenames are case-sensitive on GitHub Pages.
+  - For best performance, large video files should ideally be hosted on a CDN or on Git LFS. GitHub Pages can serve small videos but has bandwidth limits.
+-->
+
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Festival Greetings</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Festival Wishes</title>
+  <style>
+    :root{
+      --accent:#ff6b35;
+      --muted:#6b7280;
+      --card-bg:#ffffff;
+      --page-bg:#fffaf0;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--page-bg); color:#111}
+    header{background:linear-gradient(90deg,var(--accent),#ff9f43); color:#fff; padding:18px 20px; display:flex; align-items:center; justify-content:space-between}
+    header h1{margin:0; font-size:20px}
+    header .sub{font-size:13px; opacity:.95}
+    .container{padding:20px; max-width:1100px; margin:0 auto}
+    .controls{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px}
+    .btn{background:var(--accent); color:#fff; padding:10px 14px; border-radius:8px; border:none; cursor:pointer}
+    .btn.secondary{background:transparent; border:1px solid rgba(0,0,0,.08); color:#333}
+    .dropdown{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,.06)}
 
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f4f4f9;
-    }
+    /* seasonal tabs */
+    .tabs{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+    .tab{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(0,0,0,.03)}
+    .tab.active{background:#fff;border-color:rgba(0,0,0,.08);box-shadow:0 4px 12px rgba(0,0,0,.06)}
 
-    header {
-        background: #4a4aff;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 30px;
-        font-weight: bold;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    }
+    /* festival grid */
+    .festival-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px}
+    .festival-card{background:var(--card-bg); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(17,17,17,.06); text-align:left}
+    .festival-card h3{margin:0 0 8px 0}
+    .festival-card p{margin:0;color:var(--muted); font-size:14px}
 
-    /* Category Buttons */
-    .categories {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 15px;
-        justify-content: center;
-    }
+    /* content area */
+    .page-title{display:flex;align-items:center;gap:12px;margin-top:6px}
+    .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .video-box, .card-box{background:#fff;border-radius:10px;padding:10px;box-shadow:0 6px 18px rgba(17,17,17,.06)}
+    .video-box video{width:100%; border-radius:8px}
+    .card-box img{width:100%;height:170px;object-fit:cover;border-radius:8px}
+    .card-body{padding:8px}
+    .card-actions{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
 
-    .cat-btn {
-        padding: 10px 18px;
-        background: #4a4aff;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 15px;
-        transition: 0.2s;
-    }
-    .cat-btn:hover {
-        background: #2d2dd3;
-    }
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal .panel{background:#fff;border-radius:12px;max-width:980px;width:100%;max-height:90vh;overflow:auto}
+    .modal.show{display:flex}
 
-    /* Search Box */
-    #search {
-        width: 80%;
-        max-width: 400px;
-        margin: 10px auto;
-        display: block;
-        padding: 12px;
-        border-radius: 25px;
-        border: 2px solid #ccc;
-        outline: none;
-        font-size: 16px;
-    }
+    footer{padding:20px;text-align:center;color:var(--muted); font-size:14px}
 
-    /* Grid */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    /* Card */
-    .card {
-        background: white;
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        transition: transform .2s;
-    }
-    .card:hover {
-        transform: scale(1.02);
-    }
-
-    video {
-        width: 100%;
-        border-radius: 10px;
-    }
-
-    /* Download Button */
-    .download-btn {
-        margin-top: 10px;
-        padding: 8px 12px;
-        background: #4a4aff;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        width: 100%;
-    }
-
-    .download-btn:hover {
-        background: #2d2dd3;
-    }
-</style>
+    @media (max-width:640px){header{padding:12px} .container{padding:12px}}
+  </style>
 </head>
-
 <body>
-<header>Festival Greetings</header>
-
-<!-- Category Buttons -->
-<div class="categories">
-    <button class="cat-btn" onclick="filterCategory('all')">All</button>
-    <button class="cat-btn" onclick="filterCategory('newyear')">New Year</button>
-    <button class="cat-btn" onclick="filterCategory('harvest')">Harvest</button>
-    <button class="cat-btn" onclick="filterCategory('religious')">Religious</button>
-</div>
-
-<input type="text" id="search" onkeyup="searchFestivals()" placeholder="Search festival...">
-
-<div class="grid" id="festival-grid">
-
-    <!-- Example Festival Card -->
-    <div class="card" data-category="newyear">
-        <h2>New Year</h2>
-        <p>Wishing you a prosperous and joyful year!</p>
-        <video controls src="newyear.mp4"></video>
-        <a href="newyear.mp4" download><button class="download-btn">Download Video</button></a>
-        <a href="newyear-card.jpg" download><button class="download-btn">Download Greeting Card</button></a>
+  <header>
+    <div>
+      <h1>Festival Wishes</h1>
+      <div class="sub">Multiple festivals • 10 videos & 10 cards per festival</div>
     </div>
-
-    <div class="card" data-category="harvest">
-        <h2>Makar Sankranti / Pongal</h2>
-        <p>May the harvest season bring success and happiness.</p>
-        <video controls src="sankranti.mp4"></video>
-        <a href="sankranti.mp4" download><button class="download-btn">Download Video</button></a>
-        <a href="sankranti-card.jpg" download><button class="download-btn">Download Greeting Card</button></a>
-        <div class="card" data-category="religious">
-        <h2>Diwali</h2>
-        <p>May the light of lamps brighten your life.</p>
-        <video controls src="diwali.mp4"></video>
-        <a href="diwali.mp4" download><button class="download-btn">Download Video</button></a>
-        <a href="diwali-card.jpg" download><button class="download-btn">Download Greeting Card</button></a>
+    <div>
+      <button class="btn" onclick="shareHomepage()">Share site</button>
     </div>
+  </header>
 
-    <div class="card" data-category="religious">
-        <h2>Eid</h2>
-        <p>Wishing you peace, happiness and blessings.</p>
-        <video controls src="eid.mp4"></video>
-        <a href="eid.mp4" download><button class="download-btn">Download Video</button></a>
-        <a href="eid-card.jpg" download><button class="download-btn">Download Greeting Card</button></a>
+  <main class="container">
+    <!-- HOMEPAGE: seasons + festivals -->
+    <section id="home">
+      <div class="tabs" id="seasonTabs"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <h2 id="seasonTitle">Select season</h2>
+        <div class="controls">
+          <select id="filter" class="dropdown" onchange="filterFestivals(this.value)">
+            <option value="all">All festivals</option>
+            <option value="popular">Popular</option>
+          </select>
+          <input id="search" class="dropdown" placeholder="Search festival" oninput="renderFestivals()" />
+        </div>
+      </div>
+
+      <div id="festivals" class="festival-grid" style="margin-top:12px"></div>
+    </section>
+
+    <!-- FESTIVAL PAGE -->
+    <section id="festivalPage" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
+        <div>
+          <button class="btn secondary" onclick="goHome()">← Back</button>
+          <h2 id="festTitle" style="display:inline-block;margin-left:12px"></h2>
+          <div id="festDesc" style="color:var(--muted);margin-top:6px"></div>
+        </div>
+        <div>
+          <button class="btn" onclick="downloadAllCards()">Download cards (zip)</button>
+        </div>
+      </div>
+
+      <h3>Videos</h3>
+      <div id="videos" class="media-grid" style="margin-bottom:18px"></div>
+
+      <h3>Cards</h3>
+      <div id="cards" class="media-grid"></div>
+    </section>
+  </main>
+
+  <div id="previewModal" class="modal" onclick="closeModal(event)">
+    <div class="panel" onclick="event.stopPropagation()" style="padding:16px">
+      <div id="modalContent"></div>
+      <div style="text-align:right;padding:12px">
+        <button class="btn secondary" onclick="closeModal()">Close</button>
+      </div>
     </div>
+  </div>
 
-</div>
-</div>
+  <footer>
+    Built with ❤️ — upload your media files to <code>media/&lt;festival&gt;/</code> and update file names in the data object at the top of the script.
+  </footer>
 
-<script>
-// Search Function
-function searchFestivals() {
-    let input = document.getElementById("search").value.toLowerCase();
-    let cards = document.getElementsByClassName("card");
+  <script>
+    // ====== DATA ======
+    // Edit this `data` to set the festivals, their season, description and filenames.
+    const data = {
+      seasons: [
+        { id:'winter', title:'Winter', festivals: ['Christmas','New Year'] },
+        { id:'spring', title:'Spring', festivals: ['Holi','Baisakhi'] },
+        { id:'summer', title:'Summer', festivals: ['Raksha Bandhan','Independence Day'] },
+        { id:'autumn', title:'Autumn', festivals: ['Diwali','Navratri'] }
+      ],
 
-    for (let i = 0; i < cards.length; i++) {
-        let title = cards[i].getElementsByTagName("h2")[0].innerText.toLowerCase();
-        cards[i].style.display = title.includes(input) ? "block" : "none";
+      // For each festival provide 10 videos and 10 cards. Filenames are relative to a media folder.
+      festivals: {
+        'Diwali': buildFestival('diwali', 'Festival of lights', 10),
+        'Holi': buildFestival('holi', 'Festival of colors', 10),
+        'Christmas': buildFestival('christmas', 'Christmas celebrations', 10),
+        'New Year': buildFestival('newyear', 'New Year wishes', 10),
+        'Baisakhi': buildFestival('baisakhi', 'Harvest festival', 10),
+        'Raksha Bandhan': buildFestival('raksha', 'Celebrate siblings', 10),
+        'Independence Day': buildFestival('independence', 'National freedom day', 10),
+        'Navratri': buildFestival('navratri', 'Navratri festival', 10),
+        'Eid': buildFestival('eid', 'Eid greetings', 10),
+        'Ganesh Chaturthi': buildFestival('ganesh', 'Ganesh festival', 10)
+      }
+    };
+
+    // helper to quickly build placeholder arrays (video-1.mp4 ... card-1.jpg)
+    function buildFestival(folder, desc, n){
+      const videos = [];
+      const cards = [];
+      for(let i=1;i<=n;i++){
+        videos.push(`media/${folder}/video-${i}.mp4`);
+        cards.push(`media/${folder}/card-${i}.jpg`);
+      }
+      return {id:folder, description:desc, videos, cards};
     }
-}
 
-// Filter by Category
-function filterCategory(cat) {
-    let cards = document.getElementsByClassName("card");
+    // ====== UI ======
+    const seasonTabs = document.getElementById('seasonTabs');
+    const festivalsEl = document.getElementById('festivals');
+    const seasonTitle = document.getElementById('seasonTitle');
+    const searchInput = document.getElementById('search');
 
-    for (let i = 0; i < cards.length; i++) {
-        if (cat === 'all' || cards[i].dataset.category === cat) {
-            cards[i].style.display = "block";
-        } else {
-            cards[i].style.display = "none";
-        }
-    }
-}
-</script>
+    let activeSeason = data.seasons[0].id;
 
-<script>
-// Add Festival Dynamically
-function addFestival() {
-    const name = prompt('Enter Festival Name:');
-    const message = prompt('Enter Greeting Message:');
-    const category = prompt('Enter Category (newyear, harvest, religious, other):');
-    const video = prompt('Enter video file name (example: holi.mp4):');
-    const card = prompt('Enter card image file name (example: holi-card.jpg):');
-
-    if (!name || !message || !category || !video || !card) {
-        alert('All fields are required!');
-        return;
+    function init(){
+      renderSeasonTabs();
+      renderFestivals();
     }
 
-    const grid = document.getElementById('festival-grid');
+    function renderSeasonTabs(){
+      seasonTabs.innerHTML = '';
+      data.seasons.forEach(s=>{
+        const el = document.createElement('div');
+        el.className = 'tab' + (s.id===activeSeason? ' active':'');
+        el.textContent = s.title;
+        el.onclick = ()=>{ activeSeason = s.id; document.getElementById('seasonTitle').textContent = s.title; renderFestivals(); renderSeasonTabs(); };
+        seasonTabs.appendChild(el);
+      });
+      document.getElementById('seasonTitle').textContent = (data.seasons.find(s=>s.id===activeSeason)||{}).title || 'Season';
+    }
 
-    const cardHTML = `
-        <div class="card" data-category="${category}">
-            <h2>${name}</h2>
-            <p>${message}</p>
-            <video controls src="${video}"></video>
-            <a href="${video}" download><button class="download-btn">Download Video</button></a>
-            <a href="${card}" download><button class="download-btn">Download Greeting Card</button></a>
-        </div>`;
+    function renderFestivals(){
+      const q = searchInput.value.trim().toLowerCase();
+      festivalsEl.innerHTML = '';
+      const season = data.seasons.find(s=>s.id===activeSeason);
+      const list = season ? season.festivals : Object.keys(data.festivals);
+      list.forEach(name=>{
+        if(!data.festivals[name]) return;
+        if(q && !name.toLowerCase().includes(q)) return;
+        const fest = data.festivals[name];
+        const card = document.createElement('div');
+        card.className = 'festival-card';
+        card.innerHTML = `<h3>${name}</h3><p>${fest.description}</p><div style="margin-top:10px"><button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
+        festivalsEl.appendChild(card);
+      });
+    }
 
-    grid.insertAdjacentHTML('beforeend', cardHTML);
-    alert('Festival Added Successfully!');
-}
-</script>
+    // Filtering helper (simple)
+    function filterFestivals(mode){
+      // placeholder: currently only re-renders; can implement filters like 'popular'
+      renderFestivals();
+    }
 
-<!-- Add Festival Button -->
-<button onclick="addFestival()" style="position:fixed; bottom:20px; right:20px; padding:12px 18px; background:#4a4aff; color:white; border:none; border-radius:10px; font-size:16px;">+ Add Festival</button>
+    // ===== Festival page =====
+    function openFestival(name){
+      const fest = data.festivals[name];
+      if(!fest) return alert('Festival data not found');
+      document.getElementById('home').style.display='none';
+      document.getElementById('festivalPage').style.display='block';
+      document.getElementById('festTitle').textContent = name;
+      document.getElementById('festDesc').textContent = fest.description;
 
+      const videosEl = document.getElementById('videos');
+      const cardsEl = document.getElementById('cards');
+      videosEl.innerHTML = '';
+      cardsEl.innerHTML = '';
+
+      // Videos
+      fest.videos.forEach((src, idx)=>{
+        const vb = document.createElement('div'); vb.className = 'video-box';
+        const video = document.createElement('video'); video.controls = true;
+        const source = document.createElement('source'); source.src = src; source.type = 'video/mp4';
+        video.appendChild(source);
+        const p = document.createElement('p'); p.textContent = `Video ${idx+1}`;
+        vb.appendChild(video); vb.appendChild(p);
+        videosEl.appendChild(vb);
+      });
+
+      // Cards
+      fest.cards.forEach((src, idx)=>{
+        const cb = document.createElement('div'); cb.className = 'card-box';
+        const img = document.createElement('img'); img.src = src; img.alt = `Card ${idx+1}`;
+        img.onerror = ()=>{ img.src = placeholderCard(); };
+        const body = document.createElement('div'); body.className='card-body';
+        const h = document.createElement('h4'); h.textContent = `Wish ${idx+1}`;
+        const p = document.createElement('p'); p.textContent = 'Tap to preview or download';
+        const actions = document.createElement('div'); actions.className='card-actions';
+        const shareBtn = document.createElement('button'); shareBtn.className='btn'; shareBtn.textContent='Share'; shareBtn.onclick = ()=>copyToClipboard(location.href + '#' + src);
+        const previewBtn = document.createElement('button'); previewBtn.className='btn secondary'; previewBtn.textContent='Preview'; previewBtn.onclick = ()=>openModal(`<img src='${src}' style='width:100%;height:auto'/>`);
+        actions.appendChild(shareBtn); actions.appendChild(previewBtn);
+        body.appendChild(h); body.appendChild(p); body.appendChild(actions);
+        cb.appendChild(img); cb.appendChild(body);
+        cardsEl.appendChild(cb);
+      });
+    }
+
+    function goHome(){ document.getElementById('festivalPage').style.display='none'; document.getElementById('home').style.display='block'; }
+
+    // ===== Modal =====
+    const modal = document.getElementById('previewModal');
+    function openModal(html){ document.getElementById('modalContent').innerHTML = html; modal.classList.add('show'); }
+    function closeModal(e){ if(!e || e.target===modal) modal.classList.remove('show'); }
+
+    // ===== Utilities =====
+    function placeholderCard(){ return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"400\"><rect width=\"100%\" height=\"100%\" fill=\"#f3e9dd\"/><text x=\"50%\" y=\"50%\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"#caa37a\" font-size=\"22\">Card image not found</text></svg>`);
+    }
+
+    function copyToClipboard(text){ navigator.clipboard?.writeText(text).then(()=>alert('Link copied to clipboard')) }
+
+    function downloadAllCards(){ alert('Download zip not implemented in client-side demo. Use a server script or generate a zip in your build step.'); }
+
+    function shareHomepage(){ copyToClipboard(location.href); }
+
+    // init
+    init();
+  </script>
 </body>
 </html>
