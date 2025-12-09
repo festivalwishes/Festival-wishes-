@@ -1,28 +1,40 @@
-<!--
-  Festival Wishes - Single File SPA
-  ---------------------------------
-  - This single `index.html` contains a homepage, seasonal grouping, and a festival page for each festival.
-  - Each festival has 10 video slots and 10 card slots. Replace placeholder filenames with your actual media files in the `media/` folder or push files next to this index.html in your repo.
-
-  How to use:
-  1. Save this file as `index.html` at the root of your repository.
-  2. Create a `media/` folder (optional) and upload videos and images with names matching the `data` object below OR update the filenames in the `data` object.
-     Example expected file paths:
-       media/diwali/video-1.mp4
-       media/diwali/card-1.jpg
-  3. Commit & push. GitHub Pages will serve the SPA at `https://<username>.github.io/<repo>/`.
-
-  Notes:
-  - Filenames are case-sensitive on GitHub Pages.
-  - For best performance, large video files should ideally be hosted on a CDN or on Git LFS. GitHub Pages can serve small videos but has bandwidth limits.
--->
-
-<!doctype html>
-<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Festival Wishes</title>
+
+  <!-- ✅ Google Site Verification -->
+  <meta name="google-site-verification" content="gou6NtQJ0sljH3qP0KXDFa8crDuK8uQu0nxPFNFCVYI" />
+
+  <!-- ✅ Basic SEO -->
+  <title>Festival Wishes – Free Cards, Videos & Greetings</title>
+  <meta name="description" content="Download free festival greeting cards, videos and wishes for Diwali, Holi, Christmas, New Year and more. Daily updated festival greetings.">
+
+  <!-- ✅ Canonical URL -->
+  <link rel="canonical" href="https://festivalwishes.github.io/Festival-wishes-/" />
+
+  <!-- ✅ Open Graph (Facebook, WhatsApp share) -->
+  <meta property="og:title" content="Festival Wishes – Free Greeting Cards & Videos">
+  <meta property="og:description" content="Wish your loved ones with beautiful cards and videos for every festival.">
+  <meta property="og:url" content="https://festivalwishes.github.io/Festival-wishes-/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://festivalwishes.github.io/Festival-wishes-/media/preview.jpg">
+
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Festival Wishes – Free Greeting Cards & Videos">
+  <meta name="twitter:description" content="Wish your loved ones with beautiful cards and videos.">
+  <meta name="twitter:image" content="https://festivalwishes.github.io/Festival-wishes-/media/preview.jpg">
+
+  <!-- Prevent duplicate pages indexing -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Faster Mobile Loading -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/icon.png">
+
+  <!-- MAIN WEBSITE STYLE (your original CSS included unchanged below) -->
   <style>
     :root{
       --accent:#ff6b35;
@@ -69,334 +81,11 @@
     footer{padding:20px;text-align:center;color:var(--muted); font-size:14px}
 
     @media (max-width:640px){header{padding:12px} .container{padding:12px}}
-  @keyframes bgAnim {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-</style>
+
+    @keyframes bgAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
-<body>
-  <header>
-    <div>
-      <h1>Festival Wishes</h1>
-      <div class="sub">Upcoming festival recommendations</div>
-    </div>
-    <div>
-      <button class="btn" onclick="shareHomepage()">Share site</button>
-    </div>
-  </header>
-
-  <main class="container">
-    <!-- HOMEPAGE: seasons + festivals -->
-    <section id="home">
-      <div class="tabs" id="seasonTabs"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <h2 id="seasonTitle">Select season</h2>
-        <div class="controls">
-          <select id="filter" class="dropdown" onchange="filterFestivals(this.value)">
-            <option value="all">All festivals</option>
-            <option value="popular">Popular</option>
-          </select>
-          <input id="search" class="dropdown" placeholder="Search festival" oninput="renderFestivals()" />
-        </div>
-      </div>
-
-      <div id="festivals" class="festival-grid" style="margin-top:12px"></div>
-    </section>
-
-    <!-- FESTIVAL PAGE -->
-    <section id="festivalPage" style="display:none">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
-        <div>
-          <button class="btn secondary" onclick="goHome()">← Back</button>
-          <h2 id="festTitle" style="display:inline-block;margin-left:12px"></h2>
-          <div id="festDesc" style="color:var(--muted);margin-top:6px"></div>
-        </div>
-        <div>
-          <button class="btn" onclick="downloadAllCards()">Download cards (zip)</button>
-        </div>
-      </div>
-
-      <h3>Videos</h3>
-      <div id="videos" class="media-grid" style="margin-bottom:18px"></div>
-
-      <h3>Cards</h3>
-      <div id="cards" class="media-grid"></div>
-    </section>
-  </main>
-
-  <div id="previewModal" class="modal" onclick="closeModal(event)">
-    <div class="panel" onclick="event.stopPropagation()" style="padding:16px">
-      <div id="modalContent"></div>
-      <div style="text-align:right;padding:12px">
-        <button class="btn secondary" onclick="closeModal()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    Built with ❤️ — upload your media files to <code>media/&lt;festival&gt;/</code> and update file names in the data object at the top of the script.
-  </footer>
-
-  <script>
-    // ====== DATA ======
-    // Edit this `data` to set the festivals, their season, description and filenames.
-    // Auto-detect upcoming festival by today's date
-const today = new Date();
-const month = today.getMonth()+1;
-let upcoming = 'Diwali'; // default
-if(month==12) upcoming='Christmas';
-if(month==1) upcoming='Makar Sankranti';
-if(month==3) upcoming='Holi';
-if(month==8) upcoming='Raksha Bandhan';
-if(month==10) upcoming='Navratri';
-if(month==11) upcoming='Diwali';
-
-const data = {
-      seasons: [
-        { id:'winter', title:'Winter', festivals: ['Christmas','New Year'] },
-        { id:'spring', title:'Spring', festivals: ['Holi','Baisakhi'] },
-        { id:'summer', title:'Summer', festivals: ['Raksha Bandhan','Independence Day'] },
-        { id:'autumn', title:'Autumn', festivals: ['Diwali','Navratri'] }
-      ],
-
-      // For each festival provide 10 videos and 10 cards. Filenames are relative to a media folder.
-      festivals: {
-        'Diwali': buildFestival('diwali', 'Festival of lights', 10),
-        'Holi': buildFestival('holi', 'Festival of colors', 10),
-        'Christmas': buildFestival('christmas', 'Christmas celebrations', 10),
-        'New Year': buildFestival('newyear', 'New Year wishes', 10),
-        'Baisakhi': buildFestival('baisakhi', 'Harvest festival', 10),
-        'Raksha Bandhan': buildFestival('raksha', 'Celebrate siblings', 10),
-        'Independence Day': buildFestival('independence', 'National freedom day', 10),
-        'Navratri': buildFestival('navratri', 'Navratri festival', 10),
-        'Eid': buildFestival('eid', 'Eid greetings', 10),
-        'Ganesh Chaturthi': buildFestival('ganesh', 'Ganesh festival', 10)
-      }
-    };
-
-    // helper to quickly build placeholder arrays (video-1.mp4 ... card-1.jpg)
-    function buildFestival(folder, desc, n){
-      const videos = [];
-      const cards = [];
-      for(let i=1;i<=n;i++){
-        videos.push(`media/${folder}/video-${i}.mp4`);
-        cards.push(`media/${folder}/card-${i}.jpg`);
-      }
-      return {id:folder, description:desc, videos, cards};
-    }
-
-    // ====== UI ======
-    const seasonTabs = document.getElementById('seasonTabs');
-    const festivalsEl = document.getElementById('festivals');
-    const seasonTitle = document.getElementById('seasonTitle');
-    const searchInput = document.getElementById('search');
-
-    let activeSeason = data.seasons[0].id;
-
-    function init(){
-      renderSeasonTabs();
-      renderFestivals();
-    }
-
-    function renderSeasonTabs(){
-      seasonTabs.innerHTML = '';
-      data.seasons.forEach(s=>{
-        const el = document.createElement('div');
-        el.className = 'tab' + (s.id===activeSeason? ' active':'');
-        el.textContent = s.title;
-        el.onclick = ()=>{ activeSeason = s.id; document.getElementById('seasonTitle').textContent = s.title; renderFestivals(); renderSeasonTabs(); };
-        seasonTabs.appendChild(el);
-      });
-      document.getElementById('seasonTitle').textContent = (data.seasons.find(s=>s.id===activeSeason)||{}).title || 'Season';
-    }
-
-    function renderFestivals(){
-      const q = searchInput.value.trim().toLowerCase();
-      festivalsEl.innerHTML = '';
-      const season = data.seasons.find(s=>s.id===activeSeason);
-      const list = season ? season.festivals : Object.keys(data.festivals);
-      list.forEach(name=>{
-        if(!data.festivals[name]) return;
-        if(q && !name.toLowerCase().includes(q)) return;
-        const fest = data.festivals[name];
-        const card = document.createElement('div');
-        card.className = 'festival-card';
-        card.innerHTML = `<h3>${name}</h3><p>${fest.description}</p><div style="margin-top:10px"><button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
-        festivalsEl.appendChild(card);
-      });
-    }
-
-    // Filtering helper (simple)
-    function filterFestivals(mode){
-      // placeholder: currently only re-renders; can implement filters like 'popular'
-      renderFestivals();
-    }
-
-    // ===== Festival page =====
-    function openFestival(name){
-      const fest = data.festivals[name];
-      if(!fest) return alert('Festival data not found');
-      document.getElementById('home').style.display='none';
-      document.getElementById('festivalPage').style.display='block';
-      document.getElementById('festTitle').textContent = name;
-      document.getElementById('festDesc').textContent = fest.description;
-
-      const videosEl = document.getElementById('videos');
-      const cardsEl = document.getElementById('cards');
-      videosEl.innerHTML = '';
-      cardsEl.innerHTML = '';
-
-      // Videos
-      fest.videos.forEach((src, idx)=>{
-        const vb = document.createElement('div'); vb.className = 'video-box';
-        const video = document.createElement('video'); video.controls = true;
-        const source = document.createElement('source'); source.src = src; source.type = 'video/mp4';
-        video.appendChild(source);
-        const p = document.createElement('p'); p.textContent = `Video ${idx+1}`;
-        vb.appendChild(video); vb.appendChild(p);
-        videosEl.appendChild(vb);
-      });
-
-      // Cards
-      fest.cards.forEach((src, idx)=>{
-        const cb = document.createElement('div'); cb.className = 'card-box';
-        const img = document.createElement('img'); img.src = src; img.alt = `Card ${idx+1}`;
-        img.onerror = ()=>{ img.src = placeholderCard(); };
-        const body = document.createElement('div'); body.className='card-body';
-        const h = document.createElement('h4'); h.textContent = `Wish ${idx+1}`;
-        const p = document.createElement('p'); p.textContent = 'Tap to preview or download';
-        const actions = document.createElement('div'); actions.className='card-actions';
-        const shareBtn = document.createElement('button'); shareBtn.className='btn'; shareBtn.textContent='Share'; shareBtn.onclick = ()=>copyToClipboard(location.href + '#' + src);
-        const previewBtn = document.createElement('button'); previewBtn.className='btn secondary'; previewBtn.textContent='Preview'; previewBtn.onclick = ()=>openModal(`<img src='${src}' style='width:100%;height:auto'/>`);
-        actions.appendChild(shareBtn); actions.appendChild(previewBtn);
-        body.appendChild(h); body.appendChild(p); body.appendChild(actions);
-        cb.appendChild(img); cb.appendChild(body);
-        cardsEl.appendChild(cb);
-      });
-    }
-
-    function goHome(){ document.getElementById('festivalPage').style.display='none'; document.getElementById('home').style.display='block'; }
-
-    // ===== Modal =====
-    const modal = document.getElementById('previewModal');
-    function openModal(html){ document.getElementById('modalContent').innerHTML = html; modal.classList.add('show'); }
-    function closeModal(e){ if(!e || e.target===modal) modal.classList.remove('show'); }
-
-    // ===== Utilities =====
-    function placeholderCard(){ return 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"400\"><rect width=\"100%\" height=\"100%\" fill=\"#f3e9dd\"/><text x=\"50%\" y=\"50%\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"#caa37a\" font-size=\"22\">Card image not found</text></svg>`);
-    }
-
-    function copyToClipboard(text){ navigator.clipboard?.writeText(text).then(()=>alert('Link copied to clipboard')) }
-
-    function downloadAllCards(){ alert('Download zip not implemented in client-side demo. Use a server script or generate a zip in your build step.'); }
-
-    function shareHomepage(){ copyToClipboard(location.href); }
-
-    // init
-    // Set dynamic background based on upcoming festival
-(function(){
-  const bgMap={
-    'Diwali':'linear-gradient(135deg,#ffb74d,#ff9800,#f57c00)',
-    'Holi':'linear-gradient(135deg,#ff6ec7,#6ec6ff,#a8ff6e)',
-    'Christmas':'linear-gradient(135deg,#c62828,#2e7d32)',
-    'New Year':'linear-gradient(135deg,#000428,#004e92)',
-    'Raksha Bandhan':'linear-gradient(135deg,#ffd54f,#ffb300)',
-    'Navratri':'linear-gradient(135deg,#ff4081,#f50057)',
-    'Independence Day':'linear-gradient(135deg,#ff9933,#ffffff,#138808)',
-    'Baisakhi':'linear-gradient(135deg,#ffe082,#ffca28)',
-    'Makar Sankranti':'linear-gradient(135deg,#ffeb3b,#ffc107)' };
-  // Apply animated background
-const bg = bgMap[upcoming] || 'var(--page-bg)';
-document.body.style.background = bg;
-document.body.style.backgroundSize = '400% 400%';
-document.body.style.animation = 'bgAnim 12s ease infinite';
-})();
-
-init();
-  </script>
-<script>
-// --- Festival Countdown ---
-(function(){
- const dates={
-   'Diwali':'2025-10-20',
-   'Holi':'2025-03-14',
-   'Christmas':'2025-12-25',
-   'New Year':'2026-01-01',
-   'Raksha Bandhan':'2025-08-10',
-   'Navratri':'2025-09-22'
- };
- const target=new Date(dates[upcoming]||'2025-12-31');
- const el=document.getElementById('countdown')||(()=>{
-    const d=document.createElement('div');
-    d.id='countdown';d.style='text-align:center;margin:10px;font-weight:600;';
-    document.body.prepend(d);return d;
- })();
- setInterval(()=>{
-   const now=new Date();
-   const diff=target-now;
-   if(diff<0){el.innerText='Today is '+upcoming+'!';return;}
-   const days=Math.floor(diff/86400000);
-   el.innerText=upcoming+' in '+days+' days';
- },1000);
-})();
-
-// --- Background Image Layer (optional image per festival) ---
-(function(){
- const img={
-   'Diwali':'media/bg/diwali.jpg',
-   'Holi':'media/bg/holi.jpg',
-   'Christmas':'media/bg/christmas.jpg'
- }[upcoming];
- if(img){
-   document.body.style.backgroundImage = `url(${img})`;
-   document.body.style.backgroundSize = 'cover';
-   document.body.style.backgroundAttachment='fixed';
- }
-})();
-
-// --- Festival Music ---
-(function(){
- const tracks={
-   'Diwali':'media/audio/diwali.mp3',
-   'Holi':'media/audio/holi.mp3',
-   'Christmas':'media/audio/christmas.mp3'
- };
- const src=tracks[upcoming];
- if(src){
-   const a=new Audio(src);
-   a.loop=true;
-   a.volume=0.4;
-   a.play().catch(()=>{});
- }
-})();
-
-// --- Particle Effect (simple floating shapes) ---
-(function(){
- const c=document.createElement('canvas');
- c.id='particles';
- c.style='position:fixed;left:0;top:0;pointer-events:none;z-index:1;';
- document.body.appendChild(c);
- const ctx=c.getContext('2d');
- function resize(){c.width=innerWidth;c.height=innerHeight;} resize();
- const parts=Array.from({length:60},()=>({
-   x:Math.random()*c.width,
-   y:Math.random()*c.height,
-   s:2+Math.random()*3,
-   v:0.5+Math.random()*1
- }));
- function draw(){
-   ctx.clearRect(0,0,c.width,c.height);
-   ctx.fillStyle='rgba(255,255,255,0.8)';
-   parts.forEach(p=>{
-     ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);ctx.fill();
-     p.y+=p.v; if(p.y>c.height) p.y=-10;
-   });
-   requestAnimationFrame(draw);
- }
- draw();
-})();
-</script>
-</body>
-</html>
