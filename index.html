@@ -218,21 +218,27 @@ header .logo-text{
 </div>
 
 <script>
+// =========================
+// FESTIVALS DATA - Fully ready
+// =========================
 const FESTIVALS={
-  'Diwali':{id:'diwali',description:'Festival of Lights'},
-  'Holi':{id:'holi',description:'Festival of Colours'},
-  'Christmas':{id:'christmas',description:'Merry Christmas'},
-  'New Year':{id:'newyear',description:'Happy New Year'},
-  'Eid':{id:'eid',description:'Eid Mubarak'},
-  'Raksha Bandhan':{id:'raksha',description:'Celebrate Siblings'},
-  'Independence Day':{id:'independence',description:'Proud to be Indian'},
-  'Republic Day':{id:'republic',description:'Republic Day of India'},
-  'Maharashtra Day':{id:'maha',description:'Maharashtra Foundation Day'},
-  'Gudi Padwa':{id:'gudi',description:'Marathi New Year'},
-  'Baisakhi':{id:'baisakhi',description:'Harvest Festival'},
-  'Makar Sankranti':{id:'makar',description:'Festival of Kites'}
+  'Diwali':{id:'diwali', description:'Festival of Lights', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4','video2.mp4']},
+  'Holi':{id:'holi', description:'Festival of Colours', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Christmas':{id:'christmas', description:'Merry Christmas', cards:['card1.jpg','card2.jpg','card3.jpg'], videos:['video1.mp4','video2.mp4']},
+  'New Year':{id:'newyear', description:'Happy New Year', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Eid':{id:'eid', description:'Eid Mubarak', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Raksha Bandhan':{id:'raksha', description:'Celebrate Siblings', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Independence Day':{id:'independence', description:'Proud to be Indian', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Republic Day':{id:'republic', description:'Republic Day of India', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Maharashtra Day':{id:'maha', description:'Maharashtra Foundation Day', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Gudi Padwa':{id:'gudi', description:'Marathi New Year', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Baisakhi':{id:'baisakhi', description:'Harvest Festival', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
+  'Makar Sankranti':{id:'makar', description:'Festival of Kites', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']}
 };
 
+// =========================
+// SEASONS
+// =========================
 const SEASONS={
   '❄ Winter':['Christmas','New Year'],
   '🌸 Spring':['Holi','Baisakhi','Makar Sankranti','Gudi Padwa'],
@@ -240,6 +246,9 @@ const SEASONS={
   '🍁 Autumn':['Diwali','Navratri','Ganesh Chaturthi','Eid','Republic Day']
 };
 
+// =========================
+// Render Home Page
+// =========================
 function renderHome(){
   const sec=document.getElementById('seasonSection');
   sec.style.display='block';
@@ -257,38 +266,43 @@ function renderHome(){
   });
 }
 
-async function openFestival(name){
+// =========================
+// Open Festival Page
+// =========================
+function openFestival(name){
   const f=FESTIVALS[name];
   document.getElementById('seasonSection').style.display='none';
   document.getElementById('festivalPage').style.display='block';
   document.getElementById('festivalTitle').textContent=name;
   document.getElementById('festivalDesc').textContent=f.description;
 
-  const data=await fetchMedia(f.id);
   const vg=document.getElementById('videoGrid'); vg.innerHTML='';
   const cg=document.getElementById('cardGrid'); cg.innerHTML='';
 
-  data.videos.forEach(v=>{
-    vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video>
-    <button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div>`;
-  });
+  // Videos
+  if(f.videos){
+    f.videos.forEach(v=>{
+      vg.innerHTML+=`<div class='video-card'>
+        <video controls src='media/${f.id}/${v}'></video>
+        <button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button>
+      </div>`;
+    });
+  }
 
-  data.cards.forEach(c=>{
-    cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'>
-    <button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div>`;
-  });
+  // Cards
+  if(f.cards){
+    f.cards.forEach(c=>{
+      cg.innerHTML+=`<div class='card-item'>
+        <img src='media/${f.id}/${c}'>
+        <button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button>
+      </div>`;
+    });
+  }
 }
 
-async function fetchMedia(festId){
-  try{
-    const r=await fetch('media/'+festId+'/');
-    const html=await r.text();
-    const doc=new DOMParser().parseFromString(html,'text/html');
-    const files=Array.from(doc.querySelectorAll('a')).map(a=>a.href.split('/').pop());
-    return {cards:files.filter(f=>f.endsWith('.jpg')),videos:files.filter(f=>f.endsWith('.mp4'))};
-  }catch{return {cards:[],videos:[]};}
-}
-
+// =========================
+// Search Festivals
+// =========================
 function filterFestivals(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const res=Object.keys(FESTIVALS).filter(n=>n.toLowerCase().includes(q));
@@ -302,14 +316,25 @@ function filterFestivals(){
     }).join('')+`</div>`;
 }
 
+// =========================
+// Index & Utilities
+// =========================
 function toggleIndex(){const p=document.getElementById('indexPanel'); p.style.display=p.style.display==='block'?'none':'block';}
 function renderIndex(){document.getElementById('indexList').innerHTML=Object.keys(FESTIVALS).map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`).join('');}
 function downloadFile(url){const a=document.createElement('a'); a.href=url; a.download=url.split('/').pop(); a.click();}
 function goHome(){location.reload();}
 function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth'}); toggleIndex();}
 
+// =========================
+// Initialize
+// =========================
 renderHome(); renderIndex();
-for(let i=0;i<40;i++){const s=document.createElement('div'); s.className='sprinkle'; s.style.left=Math.random()*innerWidth+'px'; s.style.animationDuration=(2+Math.random()*4)+'s'; document.body.appendChild(s);}
+for(let i=0;i<40;i++){
+  const s=document.createElement('div'); s.className='sprinkle';
+  s.style.left=Math.random()*innerWidth+'px';
+  s.style.animationDuration=(2+Math.random()*4)+'s';
+  document.body.appendChild(s);
+}
 </script>
 
 </body>
