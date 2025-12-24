@@ -8,12 +8,10 @@
 <style>
 :root{
   --accent:#ff6b35;
-  --bg:#fffaf0;
   --card-bg:#ffffff;
   --radius:14px;
   --shadow:0 6px 18px rgba(0,0,0,0.08);
 }
-
 body{
   margin:0;
   font-family:Inter,sans-serif;
@@ -23,7 +21,6 @@ body{
   overflow-x:hidden;
   position:relative;
 }
-
 header{
   text-align:center;
   padding:18px;
@@ -34,7 +31,6 @@ header{
   z-index:20;
   box-shadow:0 4px 14px rgba(0,0,0,0.1);
 }
-
 header .logo-text{
   font-size:28px;
   font-weight:800;
@@ -44,14 +40,12 @@ header .logo-text{
   text-shadow:0 0 14px rgba(255,255,255,0.6);
   margin-bottom:4px;
 }
-
 .search-box{
   display:flex;
   justify-content:center;
   gap:8px;
   margin-top:10px;
 }
-
 .search-input{
   width:65%;
   max-width:320px;
@@ -60,7 +54,6 @@ header .logo-text{
   border:1px solid rgba(0,0,0,0.12);
   font-size:16px;
 }
-
 .btn-search{
   width:22%;
   max-width:110px;
@@ -72,7 +65,6 @@ header .logo-text{
   cursor:pointer;
   font-size:15px;
 }
-
 .season-title{
   margin-top:32px;
   font-size:20px;
@@ -80,14 +72,12 @@ header .logo-text{
   border-left:5px solid var(--accent);
   padding-left:12px;
 }
-
 .festival-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:18px;
   margin-top:14px;
 }
-
 .festival-card, .video-card, .card-item{
   background:var(--card-bg);
   border-radius:var(--radius);
@@ -95,26 +85,17 @@ header .logo-text{
   box-shadow:var(--shadow);
   transition:0.2s ease-in-out;
 }
-
-.festival-card img{
+.festival-card img, .card-item img{
   width:100%;
-  height:90px;
   object-fit:cover;
   border-radius:10px;
 }
-
-.card-item img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
+.festival-card img{height:90px;}
+.card-item img{height:120px;}
 .video-card video{
   width:100%;
   border-radius:10px;
 }
-
 .btn{
   width:100%;
   background:var(--accent);
@@ -126,13 +107,11 @@ header .logo-text{
   cursor:pointer;
   margin-top:8px;
 }
-
 .btn.alt{
   background:#fff;
   color:#111;
   border:1px solid rgba(0,0,0,0.1);
 }
-
 .index-menu{
   position:fixed;
   bottom:18px;
@@ -150,7 +129,6 @@ header .logo-text{
   box-shadow:var(--shadow);
   font-size:22px;
 }
-
 .index-panel{
   position:fixed;
   bottom:72px;
@@ -165,7 +143,6 @@ header .logo-text{
   display:none;
   z-index:100;
 }
-
 .sprinkle{
   position:absolute;
   width:8px;
@@ -175,11 +152,7 @@ header .logo-text{
   pointer-events:none;
   animation:fall linear infinite;
 }
-
-@keyframes fall{
-  0%{transform:translateY(0px);}
-  100%{transform:translateY(100vh);}
-}
+@keyframes fall{0%{transform:translateY(0);}100%{transform:translateY(100vh);}}
 </style>
 </head>
 
@@ -218,59 +191,72 @@ header .logo-text{
 </div>
 
 <script>
-// =========================
-// FESTIVALS DATA - Fully ready
-// =========================
-const FESTIVALS={
-  'Diwali':{id:'diwali', description:'Festival of Lights', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4','video2.mp4']},
-  'Holi':{id:'holi', description:'Festival of Colours', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Christmas':{id:'christmas', description:'Merry Christmas', cards:['card1.jpg','card2.jpg','card3.jpg'], videos:['video1.mp4','video2.mp4']},
-  'New Year':{id:'newyear', description:'Happy New Year', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Eid':{id:'eid', description:'Eid Mubarak', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Raksha Bandhan':{id:'raksha', description:'Celebrate Siblings', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Independence Day':{id:'independence', description:'Proud to be Indian', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Republic Day':{id:'republic', description:'Republic Day of India', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Maharashtra Day':{id:'maha', description:'Maharashtra Foundation Day', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Gudi Padwa':{id:'gudi', description:'Marathi New Year', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Baisakhi':{id:'baisakhi', description:'Harvest Festival', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']},
-  'Makar Sankranti':{id:'makar', description:'Festival of Kites', cards:['card1.jpg','card2.jpg'], videos:['video1.mp4']}
+// ===========================
+// MEDIA LIBRARY (Add festivals here without breaking structure)
+// ===========================
+const MEDIA_LIBRARY = {
+  diwali:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg"], videos:["video1.mp4","video2.mp4"] },
+  holi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  christmas:   { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg"], videos:["video1.mp4"] },
+  newyear:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg"], videos:["video1.mp4"] },
+  eid:         { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  raksha:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  independence:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  republic:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  maha:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  gudi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  baisakhi:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
+  makar:       { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] }
 };
 
-// =========================
-// SEASONS
-// =========================
+// ===========================
+// FESTIVALS (Your structure unchanged)
+// ===========================
+const FESTIVALS={
+  'Diwali':{id:'diwali',description:'Festival of Lights'},
+  'Holi':{id:'holi',description:'Festival of Colours'},
+  'Christmas':{id:'christmas',description:'Merry Christmas'},
+  'New Year':{id:'newyear',description:'Happy New Year'},
+  'Eid':{id:'eid',description:'Eid Mubarak'},
+  'Raksha Bandhan':{id:'raksha',description:'Celebrate Siblings'},
+  'Independence Day':{id:'independence',description:'Proud to be Indian'},
+  'Republic Day':{id:'republic',description:'Republic Day of India'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Foundation Day'},
+  'Gudi Padwa':{id:'gudi',description:'Marathi New Year'},
+  'Baisakhi':{id:'baisakhi',description:'Harvest Festival'},
+  'Makar Sankranti':{id:'makar',description:'Festival of Kites'}
+};
+
+// ===========================
 const SEASONS={
   '❄ Winter':['Christmas','New Year'],
   '🌸 Spring':['Holi','Baisakhi','Makar Sankranti','Gudi Padwa'],
   '☀ Summer':['Raksha Bandhan','Independence Day','Maharashtra Day'],
-  '🍁 Autumn':['Diwali','Navratri','Ganesh Chaturthi','Eid','Republic Day']
+  '🍁 Autumn':['Diwali','Eid','Republic Day']
 };
 
-// =========================
-// Render Home Page
-// =========================
+// ===========================
 function renderHome(){
   const sec=document.getElementById('seasonSection');
   sec.style.display='block';
   document.getElementById('festivalPage').style.display='none';
   sec.innerHTML='';
-
   Object.keys(SEASONS).forEach(season=>{
     sec.innerHTML+=`<div class='season-title'>${season}</div><div class='festival-grid'>`+
       SEASONS[season].map(name=>{
         const f=FESTIVALS[name]; if(!f) return '';
-        const thumb=`media/${f.id}/thumb.jpg`;
+        const m=MEDIA_LIBRARY[f.id];
+        const thumb=`media/${f.id}/${m.thumb}`;
         return `<div class='festival-card'><img src='${thumb}'><h3>${name}</h3>
         <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
-      }).join('') + `</div>`;
+      }).join('')+`</div>`;
   });
 }
 
-// =========================
-// Open Festival Page
-// =========================
 function openFestival(name){
   const f=FESTIVALS[name];
+  const m=MEDIA_LIBRARY[f.id];
+
   document.getElementById('seasonSection').style.display='none';
   document.getElementById('festivalPage').style.display='block';
   document.getElementById('festivalTitle').textContent=name;
@@ -279,30 +265,17 @@ function openFestival(name){
   const vg=document.getElementById('videoGrid'); vg.innerHTML='';
   const cg=document.getElementById('cardGrid'); cg.innerHTML='';
 
-  // Videos
-  if(f.videos){
-    f.videos.forEach(v=>{
-      vg.innerHTML+=`<div class='video-card'>
-        <video controls src='media/${f.id}/${v}'></video>
-        <button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button>
-      </div>`;
-    });
-  }
+  m.videos.forEach(v=>{
+    vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video>
+    <button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div>`;
+  });
 
-  // Cards
-  if(f.cards){
-    f.cards.forEach(c=>{
-      cg.innerHTML+=`<div class='card-item'>
-        <img src='media/${f.id}/${c}'>
-        <button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button>
-      </div>`;
-    });
-  }
+  m.cards.forEach(c=>{
+    cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'>
+    <button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div>`;
+  });
 }
 
-// =========================
-// Search Festivals
-// =========================
 function filterFestivals(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const res=Object.keys(FESTIVALS).filter(n=>n.toLowerCase().includes(q));
@@ -310,31 +283,20 @@ function filterFestivals(){
   sec.innerHTML=`<div class='season-title'>🔍 Results</div><div class='festival-grid'>`+
     res.map(name=>{
       const f=FESTIVALS[name];
-      const thumb=`media/${f.id}/thumb.jpg`;
+      const m=MEDIA_LIBRARY[f.id];
+      const thumb=`media/${f.id}/${m.thumb}`;
       return `<div class='festival-card'><img src='${thumb}'><h3>${name}</h3>
       <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
     }).join('')+`</div>`;
 }
 
-// =========================
-// Index & Utilities
-// =========================
 function toggleIndex(){const p=document.getElementById('indexPanel'); p.style.display=p.style.display==='block'?'none':'block';}
 function renderIndex(){document.getElementById('indexList').innerHTML=Object.keys(FESTIVALS).map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`).join('');}
-function downloadFile(url){const a=document.createElement('a'); a.href=url; a.download=url.split('/').pop(); a.click();}
+function downloadFile(u){const a=document.createElement('a'); a.href=u; a.download=u.split('/').pop(); a.click();}
 function goHome(){location.reload();}
 function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth'}); toggleIndex();}
 
-// =========================
-// Initialize
-// =========================
 renderHome(); renderIndex();
-for(let i=0;i<40;i++){
-  const s=document.createElement('div'); s.className='sprinkle';
-  s.style.left=Math.random()*innerWidth+'px';
-  s.style.animationDuration=(2+Math.random()*4)+'s';
-  document.body.appendChild(s);
-}
 </script>
 
 </body>
