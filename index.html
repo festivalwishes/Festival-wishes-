@@ -174,6 +174,11 @@ header .logo-text{
     <h2 id="festivalTitle"></h2>
     <p id="festivalDesc"></p>
 
+    <div style="margin:16px 0;display:flex;gap:10px;justify-content:center;">
+      <button class="btn" style="width:auto;padding:8px 16px;" onclick="showVideos()">Show Videos</button>
+      <button class="btn" style="width:auto;padding:8px 16px;" onclick="showCards()">Show Cards</button>
+    </div>
+
     <h3 id="videoSection">🎬 Videos</h3>
     <div id="videoGrid" class="festival-grid"></div>
 
@@ -186,31 +191,31 @@ header .logo-text{
 <div class="index-panel" id="indexPanel">
   <h3>Festival Index</h3>
   <div id="indexList"></div>
-  <button class="btn alt" onclick="jump('videoSection')">Go to Videos</button>
-  <button class="btn alt" onclick="jump('cardSection')">Go to Cards</button>
 </div>
 
 <script>
 // ===========================
-// MEDIA LIBRARY (Add festivals here without breaking structure)
+// MEDIA LIBRARY (10 cards + 10 videos support for all festivals)
 // ===========================
 const MEDIA_LIBRARY = {
-  diwali:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg"], videos:["video1.mp4","video2.mp4"] },
-  holi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  christmas:   { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg"], videos:["video1.mp4"] },
-  newyear:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg"], videos:["video1.mp4"] },
-  eid:         { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  raksha:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  independence:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  republic:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  maha:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  gudi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  baisakhi:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] },
-  makar:       { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg"], videos:["video1.mp4"] }
+  diwali:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  holi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  christmas:   { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  newyear:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  eid:         { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  raksha:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  independence:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.jpg","video10.mp4"] },
+  ambedkar:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  gandhi:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  shivaji:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  hanuman:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  ramnavmi:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  baisakhi:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  makar:       { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] }
 };
 
 // ===========================
-// FESTIVALS (Your structure unchanged)
+// FESTIVALS (added all new festivals)
 // ===========================
 const FESTIVALS={
   'Diwali':{id:'diwali',description:'Festival of Lights'},
@@ -220,22 +225,27 @@ const FESTIVALS={
   'Eid':{id:'eid',description:'Eid Mubarak'},
   'Raksha Bandhan':{id:'raksha',description:'Celebrate Siblings'},
   'Independence Day':{id:'independence',description:'Proud to be Indian'},
-  'Republic Day':{id:'republic',description:'Republic Day of India'},
   'Maharashtra Day':{id:'maha',description:'Maharashtra Foundation Day'},
-  'Gudi Padwa':{id:'gudi',description:'Marathi New Year'},
-  'Baisakhi':{id:'baisakhi',description:'Harvest Festival'},
-  'Makar Sankranti':{id:'makar',description:'Festival of Kites'}
+
+  'Mahashivratri':{id:'mahashivratri',description:'Har Har Mahadev'},
+  'Chhatrapati Shivaji Maharaj Jayanti':{id:'shivaji',description:'Jai Bhavani, Jai Shivaji'},
+  'Hanuman Jayanti':{id:'hanuman',description:'Jai Shri Ram, Jai Hanuman'},
+  'Ram Navmi':{id:'ramnavmi',description:'Shri Ram Jayanti'},
+  'Republic Day of India':{id:'republic',description:'Proud to be Indian'},
+  'Dr B R Ambedkar Jayanti':{id:'ambedkar',description:'Jai Bhim'},
+  'Gandhi Jayanti':{id:'gandhi',description:'Remembering Bapu'}
 };
 
-// ===========================
 const SEASONS={
   '❄ Winter':['Christmas','New Year'],
-  '🌸 Spring':['Holi','Baisakhi','Makar Sankranti','Gudi Padwa'],
-  '☀ Summer':['Raksha Bandhan','Independence Day','Maharashtra Day'],
-  '🍁 Autumn':['Diwali','Eid','Republic Day']
+  '🌸 Spring':['Holi','Baisakhi','Makar Sankranti','Gudi Padwa','Mahashivratri','Ram Navmi','Hanuman Jayanti'],
+  '☀ Summer':['Raksha Bandhan','Independence Day','Maharashtra Day','Dr B R Ambedkar Jayanti'],
+  '🍁 Autumn':['Diwali','Eid','Republic Day of India','Gandhi Jayanti']
 };
 
-// ===========================
+function showVideos(){ document.getElementByById("videoGrid").style.display="grid"; document.getElementById("cardGrid").style.display="none"; }
+function showCards(){ document.getElementById("cardGrid").style.display="grid"; document.getElementById("videoGrid").style.display="none"; }
+
 function renderHome(){
   const sec=document.getElementById('seasonSection');
   sec.style.display='block';
@@ -245,35 +255,26 @@ function renderHome(){
     sec.innerHTML+=`<div class='season-title'>${season}</div><div class='festival-grid'>`+
       SEASONS[season].map(name=>{
         const f=FESTIVALS[name]; if(!f) return '';
-        const m=MEDIA_LIBRARY[f.id];
-        const thumb=`media/${f.id}/${m.thumb}`;
-        return `<div class='festival-card'><img src='${thumb}'><h3>${name}</h3>
+        const m=MEDIA_LIBRARY[f.id] || {thumb:"thumb.jpg"};
+        return `<div class='festival-card'><img src='media/${f.id}/${m.thumb}'><h3>${name}</h3>
         <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
       }).join('')+`</div>`;
   });
 }
 
 function openFestival(name){
-  const f=FESTIVALS[name];
-  const m=MEDIA_LIBRARY[f.id];
-
+  const f = FESTIVALS[name];
+  const m = MEDIA_LIBRARY[f.id];
   document.getElementById('seasonSection').style.display='none';
   document.getElementById('festivalPage').style.display='block';
   document.getElementById('festivalTitle').textContent=name;
   document.getElementById('festivalDesc').textContent=f.description;
-
-  const vg=document.getElementById('videoGrid'); vg.innerHTML='';
-  const cg=document.getElementById('cardGrid'); cg.innerHTML='';
-
-  m.videos.forEach(v=>{
-    vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video>
-    <button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div>`;
-  });
-
-  m.cards.forEach(c=>{
-    cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'>
-    <button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div>`;
-  });
+  const vg=document.getElementById('videoGrid');
+  const cg=document.getElementById('cardGrid');
+  vg.innerHTML=''; cg.innerHTML='';
+  m.videos.forEach(v=>{ vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video><button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div>`;});
+  m.cards.forEach(c=>{ cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'><button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div>`;});
+  vg.style.display="none"; cg.style.display="none";
 }
 
 function filterFestivals(){
@@ -283,18 +284,16 @@ function filterFestivals(){
   sec.innerHTML=`<div class='season-title'>🔍 Results</div><div class='festival-grid'>`+
     res.map(name=>{
       const f=FESTIVALS[name];
-      const m=MEDIA_LIBRARY[f.id];
-      const thumb=`media/${f.id}/${m.thumb}`;
-      return `<div class='festival-card'><img src='${thumb}'><h3>${name}</h3>
+      const m=MEDIA_LIBRARY[f.id]||{thumb:"thumb.jpg"};
+      return `<div class='festival-card'><img src='media/${f.id}/${m.thumb}'><h3>${name}</h3>
       <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
     }).join('')+`</div>`;
 }
 
 function toggleIndex(){const p=document.getElementById('indexPanel'); p.style.display=p.style.display==='block'?'none':'block';}
 function renderIndex(){document.getElementById('indexList').innerHTML=Object.keys(FESTIVALS).map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`).join('');}
-function downloadFile(u){const a=document.createElement('a'); a.href=u; a.download=u.split('/').pop(); a.click();}
+function downloadFile(u){const a=document.createElement('a');a.href=u;a.download=u.split('/').pop();a.click();}
 function goHome(){location.reload();}
-function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth'}); toggleIndex();}
 
 renderHome(); renderIndex();
 </script>
