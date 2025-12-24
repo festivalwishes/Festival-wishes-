@@ -1,283 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>FestivalWishes ✨</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>✨ Festival Wishes ✨</title>
 
 <style>
-body {
-  margin:0;
-  font-family:Poppins, sans-serif;
-  background:#fff;
+:root{
+  --accent:#ff6b35;
+  --bg:#fffaf0;
+  --card-bg:#ffffff;
+  --radius:14px;
+  --shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* HEADER */
-header {
-  background:linear-gradient(to right,#ff9a9e,#fad0c4);
-  padding:15px;
-  text-align:center;
+body{
+  margin:0;
+  font-family:Inter,sans-serif;
+  background:linear-gradient(135deg,#fff7e6,#ffe2d2,#fff0e9);
+  min-height:100vh;
+  color:#111;
+  overflow-x:hidden;
   position:relative;
-  overflow:hidden;
 }
 
-header h1 {
-  margin:0;
-  font-size:26px;
-  color:#fff;
-  text-shadow:0 0 8px rgba(255,255,255,0.8);
-}
-
-/* Sprinkle lights */
-header::after {
-  content:"";
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  background-image:url('✨');
-  opacity:0.3;
-  animation:sparkle 2s infinite alternate;
-}
-@keyframes sparkle {
-  0%{opacity:0.2}100%{opacity:0.4}
-}
-
-/* SEARCH BAR */
-.search-container {
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:15px 0;
-}
-
-.search-container input {
-  width:60%;
-  padding:10px;
-  border:2px solid #ff9a9e;
-  border-radius:25px;
-  outline:none;
-}
-
-.search-container button {
-  padding:10px 18px;
-  background:#ff758c;
-  border:none;
-  border-radius:25px;
-  color:#fff;
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* INDEX MENU */
-.index-menu {
-  background:#ffe3e8;
-  padding:12px;
-}
-
-.index-menu details {
-  background:#fff;
-  border-radius:12px;
-  padding:10px;
-  margin-bottom:10px;
-  border:1px solid #ffb6c1;
-}
-
-.index-menu summary {
-  font-weight:600;
-  font-size:18px;
-  cursor:pointer;
-  color:#ff758c;
-}
-
-.index-menu ul {
-  list-style:none;
-  padding-left:10px;
-}
-
-.index-menu ul li {
-  padding:6px 0;
-}
-
-.index-menu a {
-  text-decoration:none;
-  color:#333;
-  font-weight:500;
-}
-
-.index-menu .section-title {
-  margin-top:8px;
-  font-size:16px;
-  font-weight:600;
-  color:#d6336c;
-}
-
-/* FESTIVAL SECTIONS */
-.season {
-  padding:15px;
-}
-
-.season h2 {
-  font-size:22px;
-  color:#ff758c;
-  border-left:5px solid #ff758c;
-  padding-left:10px;
-  margin-bottom:10px;
-}
-
-.festival-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:12px;
-}
-
-.festival-card {
-  background:#fff;
-  border-radius:15px;
-  padding:10px;
+header{
   text-align:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  border:1px solid #ffd6dd;
+  padding:18px;
+  background:var(--accent);
+  color:white;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 4px 14px rgba(0,0,0,0.1);
 }
 
-.festival-card img {
-  width:100%;
-  height:90px;
-  object-fit:cover;
-  border-radius:12px;
+header .logo-text{
+  font-size:28px;
+  font-weight:800;
+  background:linear-gradient(90deg,#fff,#ffdd00,#fff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 14px rgba(255,255,255,0.6);
+  margin-bottom:4px;
 }
 
-.festival-card p {
-  margin:8px 0 0;
-  font-weight:600;
-  font-size:14px;
+header h1{
+  margin:0;
+  font-size:22px;
+  text-shadow:0 0 12px #fff,0 0 22px #ffdd00;
 }
-</style>
-</head>
 
-<body>
-
-<header>
-  <h1>FestivalWishes ✨</h1>
-</header>
-
-<!-- SEARCH -->
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search festival..."/>
-  <button onclick="searchFestival()">Search</button>
-</div>
-
-<!-- INDEX MENU -->
-<div class="index-menu">
-<details>
-<summary>📌 Festival Index</summary>
-<ul id="festivalList">
-  <li><a href="#winter">❄ Winter Festivals</a></li>
-  <li><a href="#summer">☀ Summer Festivals</a></li>
-  <li><a href="#monsoon">🌧 Monsoon Festivals</a></li>
-  <li><a href="#national">🇮🇳 National Days</a></li>
-  <li><a href="#maharashtra">🌟 Maharashtra Special</a></li>
-
-  <li class="section-title">🎴 Cards Section</li>
-  <li><a href="media/christmas/">Christmas Cards</a></li>
-  <li><a href="media/newyear/">New Year Cards</a></li>
-  <li><a href="media/diwali/">Diwali Cards</a></li>
-  <li><a href="media/holi/">Holi Cards</a></li>
-  <li><a href="media/navratri/">Navratri Cards</a></li>
-  <li><a href="media/makar/">Makar Sankranti Cards</a></li>
-
-  <li class="section-title">🎥 Videos Section</li>
-  <li><a href="media/christmas/">Christmas Videos</a></li>
-  <li><a href="media/newyear/">New Year Videos</a></li>
-  <li><a href="media/diwali/">Diwali Videos</a></li>
-  <li><a href="media/holi/">Holi Videos</a></li>
-  <li><a href="media/independence/">Independence Videos</a></li>
-</ul>
-</details>
-</div>
-
-<!-- WINTER -->
-<section class="season" id="winter">
-<h2>❄ Winter Festivals</h2>
-<div class="festival-grid">
-  <div class="festival-card"><img src="media/christmas/card-1.jpg"/><p>Christmas</p></div>
-  <div class="festival-card"><img src="media/newyear/card-1.jpg"/><p>New Year</p></div>
-  <div class="festival-card"><img src="media/makar/card-1.jpg"/><p>Makar Sankranti</p></div>
-</div>
-</section>
-
-<!-- SUMMER -->
-<section class="season" id="summer">
-<h2>☀ Summer Festivals</h2>
-<div class="festival-grid">
-  <div class="festival-card"><img src="media/holi/card-1.jpg"/><p>Holi</p></div>
-  <div class="festival-card"><img src="media/gudipadwa/card-1.jpg"/><p>Gudi Padwa</p></div>
-  <div class="festival-card"><img src="media/navratri/card-1.jpg"/><p>Navratri</p></div>
-  <div class="festival-card"><img src="media/baisakhi/card-1.jpg"/><p>Baisakhi</p></div>
-</div>
-</section>
-
-<!-- MONSOON -->
-<section class="season" id="monsoon">
-<h2>🌧 Monsoon Festivals</h2>
-<div class="festival-grid">
-  <div class="festival-card"><img src="media/ganesh/card-1.jpg"/><p>Ganesh Chaturthi</p></div>
-  <div class="festival-card"><img src="media/raksha/card-1.jpg"/><p>Raksha Bandhan</p></div>
-  <div class="festival-card"><img src="media/eid/card-1.jpg"/><p>Eid</p></div>
-</div>
-</section>
-
-<!-- NATIONAL -->
-<section class="season" id="national">
-<h2>🇮🇳 National Days</h2>
-<div class="festival-grid">
-  <div class="festival-card"><img src="media/republicday/card-1.jpg"/><p>Republic Day</p></div>
-  <div class="festival-card"><img src="media/independence/card-1.jpg"/><p>Independence Day</p></div>
-</div>
-</section>
-
-<!-- MAHARASHTRA -->
-<section class="season" id="maharashtra">
-<h2>🌟 Maharashtra Special</h2>
-<div class="festival-grid">
-  <div class="festival-card"><img src="media/maharashtraday/card-1.jpg"/><p>Maharashtra Day</p></div>
-  <div class="festival-card"><img src="media/diwali/card-1.jpg"/><p>Diwali</p></div>
-</div>
-</section>
-
-<script>
-function searchFestival(){
-  let input=document.getElementById("searchInput").value.toLowerCase();
-  if(!input)return;
-
-  let festivals={
-    "christmas":"#winter",
-    "new year":"#winter",
-    "diwali":"#maharashtra",
-    "holi":"#summer",
-    "gudi padwa":"#summer",
-    "navratri":"#summer",
-    "republic day":"#national",
-    "independence day":"#national",
-    "maharashtra day":"#maharashtra",
-    "baisakhi":"#summer",
-    "raksha bandhan":"#monsoon",
-    "eid":"#monsoon",
-    "ganesh chaturthi":"#monsoon",
-    "makar sankranti":"#winter",
-    "makar":"#winter"
-  };
-
-  if(festivals[input])window.location.href=festivals[input];
-  else alert("Festival not found!");
+.container{
+  max-width:1200px;
+  margin:20px auto;
+  padding:0 14px;
 }
-</script>
 
-</body>
-</html>
+.search-input{
+  width:90%;
+  max-width:380px;
+  margin:14px auto;
+  display:block;
   padding:10px 14px;
   border-radius:10px;
   border:1px solid rgba(0,0,0,0.12);
   font-size:16px;
 }
+
 .season-title{
   margin-top:32px;
   font-size:20px;
@@ -285,12 +75,14 @@ function searchFestival(){
   border-left:5px solid var(--accent);
   padding-left:12px;
 }
+
 .festival-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:18px;
   margin-top:14px;
 }
+
 .festival-card, .video-card, .card-item{
   background:var(--card-bg);
   border-radius:var(--radius);
@@ -298,22 +90,31 @@ function searchFestival(){
   box-shadow:var(--shadow);
   transition:0.2s ease-in-out;
 }
+
+.festival-card:hover, .video-card:hover, .card-item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.12);
+}
+
 .festival-card img{
   width:100%;
   height:90px;
   object-fit:cover;
   border-radius:10px;
 }
+
 .card-item img{
   width:100%;
   height:120px;
   object-fit:cover;
   border-radius:10px;
 }
+
 .video-card video{
   width:100%;
   border-radius:10px;
 }
+
 .btn{
   width:100%;
   background:var(--accent);
@@ -325,11 +126,13 @@ function searchFestival(){
   cursor:pointer;
   margin-top:8px;
 }
+
 .btn.alt{
   background:#fff;
   color:#111;
   border:1px solid rgba(0,0,0,0.1);
 }
+
 .index-menu{
   position:fixed;
   bottom:18px;
@@ -347,6 +150,7 @@ function searchFestival(){
   box-shadow:var(--shadow);
   font-size:22px;
 }
+
 .index-panel{
   position:fixed;
   bottom:72px;
@@ -361,11 +165,8 @@ function searchFestival(){
   display:none;
   z-index:100;
 }
+
 .index-panel h3{margin-top:0}
-.index-panel button{
-  width:100%;
-  margin:6px 0;
-}
 
 /* Sprinkles animation */
 .sprinkle{
@@ -387,35 +188,35 @@ function searchFestival(){
 <body>
 
 <header>
-<div class="logo-text">✨ Festival Wishes ✨</div>
-<h1>Cards & Videos</h1>
-<input type="text" class="search-input" placeholder="Search festival..." id="searchInput" oninput="filterFestivals()">
+  <div class="logo-text">✨ Festival Wishes ✨</div>
+  <h1>Cards & Videos</h1>
+  <input type="text" class="search-input" placeholder="Search festival..." id="searchInput" oninput="filterFestivals()">
 </header>
 
 <main class="container">
-<section id="seasonSection"></section>
+  <section id="seasonSection"></section>
 
-<section id="festivalPage" style="display:none">
-<button class="btn alt" onclick="goHome()">← Back to Home</button>
-<h2 id="festivalTitle"></h2>
-<p id="festivalDesc"></p>
+  <section id="festivalPage" style="display:none">
+    <button class="btn alt" onclick="goHome()">← Back to Home</button>
+    <h2 id="festivalTitle"></h2>
+    <p id="festivalDesc"></p>
 
-<h3 id="videoSection">🎬 Videos</h3>
-<div id="videoGrid" class="festival-grid"></div>
+    <h3 id="videoSection">🎬 Videos</h3>
+    <div id="videoGrid" class="festival-grid"></div>
 
-<h3 id="cardSection">🖼 Cards</h3>
-<div id="cardGrid" class="festival-grid"></div>
+    <h3 id="cardSection">🖼 Cards</h3>
+    <div id="cardGrid" class="festival-grid"></div>
 
-<button class="btn alt" onclick="goHome()">← Back to Home</button>
-</section>
+    <button class="btn alt" onclick="goBack()">← Back</button>
+  </section>
 </main>
 
 <div class="index-menu" onclick="toggleIndex()">☰</div>
 <div class="index-panel" id="indexPanel">
-<h3>Festival Index</h3>
-<div id="indexList"></div>
-<button class="btn" onclick="jump('videoSection')">Go to Videos</button>
-<button class="btn" onclick="jump('cardSection')">Go to Cards</button>
+  <h3>Festival Index</h3>
+  <div id="indexList"></div>
+  <button class="btn alt" onclick="jump('videoSection')">Go to Videos</button>
+  <button class="btn alt" onclick="jump('cardSection')">Go to Cards</button>
 </div>
 
 <script>
@@ -427,34 +228,61 @@ const FESTIVALS={
   'Eid':{id:'eid',description:'Eid Mubarak'},
   'Raksha Bandhan':{id:'raksha',description:'Celebrate Siblings'},
   'Independence Day':{id:'independence',description:'Proud to be Indian'},
+  'Republic Day':{id:'republic',description:'Republic Day of India'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Foundation Day'},
+  'Gudi Padwa':{id:'gudi',description:'Marathi New Year'},
   'Navratri':{id:'navratri',description:'Nine Nights Festival'},
   'Ganesh Chaturthi':{id:'ganesh',description:'Ganpati Bappa Morya'},
   'Baisakhi':{id:'baisakhi',description:'Harvest Festival'},
-  'Makar Sankranti':{id:'makar',description:'Makar Sankranti Festival'}
+  'Makar Sankranti':{id:'makar',description:'Kite & Harvest Festival'},
+  'Gudi Padwa':{id:'gudi',description:'Marathi New Year'},
+  'Maharashtra Day':{id:'maha',description:'State Formation Day'},
+  'Makar Sankranti':{id:'makar',description:'Festival of Kites'},
+  'Baisakhi':{id:'baisakhi',description:'Harvest Festival'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Day'},
+  'Republic Day':{id:'republic',description:'Republic Day of India'},
+  'Makar Sankranti':{id:'makar',description:'Makar Sankranti'},
+  'Gudi Padwa':{id:'gudi',description:'Gudi Padwa'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Day'},
+  'Republic Day':{id:'republic',description:'Republic Day'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Day'},
+  'Gudi Padwa':{id:'gudi',description:'Gudi Padwa'},
+  'Maharashtra Day':{id:'maha',description:'Maharashtra Day'}
 };
 
 const SEASONS={
   '❄ Winter':['Christmas','New Year'],
-  '🌸 Spring':['Holi','Baisakhi','Makar Sankranti'],
-  '☀ Summer':['Raksha Bandhan','Independence Day'],
-  '🍁 Autumn':['Diwali','Navratri','Ganesh Chaturthi','Eid']
+  '🌸 Spring':['Holi','Baisakhi','Makar Sankranti','Gudi Padwa'],
+  '☀ Summer':['Raksha Bandhan','Independence Day','Maharashtra Day'],
+  '🍁 Autumn':['Diwali','Navratri','Ganesh Chaturthi','Eid','Republic Day']
 };
+
+let historyStack=[];
 
 function renderHome(){
   const sec=document.getElementById('seasonSection');
+  sec.style.display='block';
+  document.getElementById('festivalPage').style.display='none';
   sec.innerHTML='';
+
   Object.keys(SEASONS).forEach(season=>{
-    sec.innerHTML+=`<div class='season-title'>${season}</div><div class='festival-grid' id='grid-${season}'>`+
+    sec.innerHTML+=`<div class='season-title'>${season}</div><div class='festival-grid'>`+
       SEASONS[season].map(name=>{
         const f=FESTIVALS[name]; if(!f) return '';
-        const thumb=`media/${f.id}/card-1.jpg`;
-        return `<div class='festival-card'><img src='${thumb}' onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&quot;#x22; width=&quot;150&quot; height=&quot;90&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#eee&quot;/><text x=&quot;50%&quot; y=&quot;50%&quot; text-anchor=&quot;middle&quot; fill=&quot;#888&quot; dy=&quot;.3em&quot;>No Image</text></svg>'"><h3>${name}</h3><button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
+        const thumb=`media/${f.id}/thumb.jpg`;
+        return `<div class='festival-card'>
+          <img src='${thumb}' onerror="this.src='data:image/svg+xml;utf8,<svg width=150 height=90><rect width=100% height=100% fill=#eee /><text x=50% y=50% text-anchor=middle fill=#888 dy=.3em>No Image</text></svg>'">
+          <h3>${name}</h3>
+          <button class='btn' onclick="openFestival('${name}')">Open</button>
+        </div>`;
       }).join('') + `</div>`;
   });
+
   renderIndex();
 }
 
 async function openFestival(name){
+  historyStack.push('home');
   const f=FESTIVALS[name];
   document.getElementById('seasonSection').style.display='none';
   document.getElementById('festivalPage').style.display='block';
@@ -466,10 +294,13 @@ async function openFestival(name){
   const cg=document.getElementById('cardGrid'); cg.innerHTML='';
 
   data.videos.forEach(v=>{
-    vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video><button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div>`;
+    vg.innerHTML+=`<div class='video-card'><video controls src='media/${f.id}/${v}'></video>
+    <div class='card-actions'><button class='btn' onclick="downloadFile('media/${f.id}/${v}')">Download</button></div></div>`;
   });
+
   data.cards.forEach(c=>{
-    cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'><button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div>`;
+    cg.innerHTML+=`<div class='card-item'><img src='media/${f.id}/${c}'>
+    <div class='card-actions'><button class='btn' onclick="downloadFile('media/${f.id}/${c}')">Download</button></div></div>`;
   });
 }
 
@@ -479,16 +310,56 @@ async function fetchMedia(festId){
     const html=await r.text();
     const doc=new DOMParser().parseFromString(html,'text/html');
     const files=Array.from(doc.querySelectorAll('a')).map(a=>a.href.split('/').pop());
-    return {cards:files.filter(f=>f.startsWith('card-') && f.endsWith('.jpg')),videos:files.filter(f=>f.startsWith('video-') && f.endsWith('.mp4'))};
+    return {cards:files.filter(f=>f.startsWith('card-') && f.endsWith('.jpg')),videos:files.filter(f=>f.endsWith('.mp4'))};
   }catch{return {cards:[],videos:[]};}
 }
 
-function filterFestivals(){renderHome();}
-function toggleIndex(){const p=document.getElementById('indexPanel'); p.style.display=p.style.display==='block'?'none':'block';}
-function renderIndex(){const l=document.getElementById('indexList'); l.innerHTML=Object.keys(FESTIVALS).map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`).join('');}
-function downloadFile(url){const a=document.createElement('a'); a.href=url; a.download=url.split('/').pop(); a.click();}
-function goHome(){document.getElementById('festivalPage').style.display='none';document.getElementById('seasonSection').style.display='block';}
-function jump(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function filterFestivals(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const all=Object.keys(FESTIVALS);
+  const results=all.filter(n=>n.toLowerCase().includes(q));
+  const sec=document.getElementById('seasonSection');
+  sec.innerHTML=`<div class='season-title'>🔍 Search Results</div><div class='festival-grid'>`+
+    results.map(name=>{
+      const f=FESTIVALS[name];
+      const thumb=`media/${f.id}/thumb.jpg`;
+      return `<div class='festival-card'><img src='${thumb}'><h3>${name}</h3>
+      <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
+    }).join('')+`</div>`;
+}
+
+function toggleIndex(){
+  const p=document.getElementById('indexPanel');
+  p.style.display=p.style.display==='block'?'none':'block';
+}
+
+function renderIndex(){
+  const l=document.getElementById('indexList');
+  l.innerHTML=Object.keys(FESTIVALS).map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`).join('');
+}
+
+function downloadFile(url){
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=url.split('/').pop();
+  a.click();
+}
+
+function goHome(){
+  historyStack=[];
+  renderHome();
+}
+
+function goBack(){
+  if(historyStack.length===0){renderHome();return;}
+  historyStack.pop();
+  renderHome();
+}
+
+function jump(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  toggleIndex();
+}
 
 // Sprinkles effect
 for(let i=0;i<50;i++){
