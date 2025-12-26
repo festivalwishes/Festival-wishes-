@@ -213,21 +213,41 @@ header .tagline{
 <script>
 
 // ===========================
-// MEDIA LIBRARY (Festivals only, 10 cards + 10 videos each)
+// SEASONS LIST (FIX ADDED)
 // ===========================
-const MEDIA_LIBRARY = {
-  diwali:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  holi:        { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  christmas:   { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  newyear:     { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  eid:         { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  raksha:      { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  baisakhi:    { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
-  makar:       { thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] }
+const SEASONS = {
+  "Summer":["Baisakhi","Maharashtra Day","Mother’s Day","Father’s Day"],
+  "Monsoon":["Holi","Raksha Bandhan","Nag Panchami","Bail Pola"],
+  "Winter":["Diwali","Christmas","New Year","Children’s Day"],
+  "Spring":["Gudipadwa","Mahashivratri","Gauri Pujan","Ganesh Chaturthi","Navratri","Chhath Puja"]
 };
 
 // ===========================
-// FESTIVALS (no duplicates)
+// MEDIA LIBRARY (preserved + added new festival IDs)
+// ===========================
+const MEDIA_LIBRARY = {
+  diwali:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  holi:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  christmas:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  newyear:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  eid:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  raksha:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  baisakhi:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  makar:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+
+  gudipadwa:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  krishnajanmashtami:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  mahashivratri:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  bailpola:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  nagpanchami:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  gauri:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  ganeshchaturthi:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  navratri:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] },
+  chhathpuja:{ thumb:"thumb.jpg", cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"], videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"] }
+};
+
+// ===========================
+// FESTIVALS FIXED + ADDED
 // ===========================
 const FESTIVALS={
   'Diwali':{id:'diwali',description:'Festival of Lights'},
@@ -237,47 +257,18 @@ const FESTIVALS={
   'Eid':{id:'eid',description:'Eid Mubarak'},
   'Raksha Bandhan':{id:'raksha',description:'Celebrate Siblings'},
   'Baisakhi':{id:'baisakhi',description:'Baisakhi Festival'},
-  'Makar Sankranti':{id:'makar',description:'Makar Sankranti'}
+  'Makar Sankranti':{id:'makar',description:'Makar Sankranti'},
+  'Gudipadwa':{id:'gudipadwa',description:'Gudi Padwa – Marathi New Year'},
+  'Krishna Janmashtami':{id:'krishnajanmashtami',description:'Krishna Janmashtami'},
+  'Mahashivratri':{id:'mahashivratri',description:'Mahashivratri'},
+  'Bail Pola':{id:'bailpola',description:'Bail Pola'},
+  'Nag Panchami':{id:'nagpanchami',description:'Nag Panchami'},
+  'Gauri Pujan':{id:'gauri',description:'Gauri / Mahalaxmi Pujan'},
+  'Ganesh Chaturthi':{id:'ganeshchaturthi',description:'Ganesh Chaturthi'},
+  'Navratri':{id:'navratri',description:'Navratri'},
+  'Chhath Puja':{id:'chhathpuja',description:'Chhath Puja'}
 };
 
-// ===========================
-// FAMOUS DAYS (10 cards + 10 videos each)
-// ===========================
-const FAMOUS_DAYS={
-  'Republic Day of India':{id:'republic',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Independence Day of India':{id:'independence',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Constitution Day of India':{id:'constitution',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.jpg","video9.jpg","video10.jpg"]},
-  'International Yoga Day':{id:'yoga',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Maharashtra Day':{id:'maharashtra',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Mother’s Day':{id:'mother',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Father’s Day':{id:'father',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Children’s Day':{id:'children',cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]}
-};
-
-// ===========================
-// GREAT PEOPLE JAYANTI (10 cards + 10 videos each)
-// ===========================
-const JAYANTI_DAYS={
-  'Swami Vivekananda':{birth:"January 12",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Netaji Subhash Chandra Bose':{birth:"January 23",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Chhatrapati Shivaji Maharaj':{birth:"February 19",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Dr. B.R. Ambedkar':{birth:"April 14",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Rabindranath Tagore':{birth:"May 7",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Chhatrapati Sambhaji Maharaj':{birth:"May 14",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'V.D. Savarkar':{birth:"May 28",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Chandra Shekhar Azad':{birth:"July 23",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Bhagat Singh':{birth:"September 28",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Mahatma Gandhi':{birth:"October 2",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Lal Bahadur Shastri':{birth:"October 2",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Dr. A.P.J. Abdul Kalam':{birth:"October 15",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Sardar Vallabhbhai Patel':{birth:"October 31",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Jawaharlal Nehru':{birth:"November 14",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]},
-  'Atal Bihari Vajpayee':{birth:"December 25",cards:["card1.jpg","card2.jpg","card3.jpg","card4.jpg","card5.jpg","card6.jpg","card7.jpg","card8.jpg","card9.jpg","card10.jpg"],videos:["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4","video7.mp4","video8.mp4","video9.mp4","video10.mp4"]}
-};
-
-// ===========================
-// RENDER FUNCTIONS (original preserved)
-// ===========================
 function renderHome(){
   const sec=document.getElementById('seasonSection');
   sec.style.display='block';
@@ -291,54 +282,6 @@ function renderHome(){
         return `<div class='festival-card'><img src='media/${f.id}/${m.thumb}'><h3>${name}</h3>
         <button class='btn' onclick="openFestival('${name}')">Open</button></div>`;
       }).join('')+`</div>`;
-  });
-}
-
-function renderFamousDays(){
-  const list = document.getElementById('seasonSection');
-  list.style.display='none';
-  document.getElementById('festivalPage').style.display='block';
-  document.getElementById('festivalTitle').textContent="Famous Days";
-  document.getElementById('festivalDesc').textContent="Special days celebrated worldwide and in India.";
-  const vg=document.getElementById('videoGrid');
-  const cg=document.getElementById('cardGrid');
-  vg.innerHTML=''; cg.innerHTML='';
-  Object.keys(FAMOUS_DAYS).forEach(day=>{
-    const f=FAMOUS_DAYS[day];
-    f.videos.forEach(v=>{
-      vg.innerHTML+=`<div class='video-card'><video controls src='media/${day}/${v}'></video>
-      <button class='btn' onclick="downloadFile('media/${day}/${v}')">Download</button>
-      <button class='btn share-btn' onclick="shareFile('media/${day}/${v}')">Share</button></div>`;
-    });
-    f.cards.forEach(c=>{
-      cg.innerHTML+=`<div class='card-item'><img src='media/${day}/${c}'>
-      <button class='btn' onclick="downloadFile('media/${day}/${c}')">Download</button>
-      <button class='btn share-btn' onclick="shareFile('media/${day}/${c}')">Share</button></div>`;
-    });
-  });
-}
-
-function renderJayanti(){
-  const list = document.getElementById('seasonSection');
-  list.style.display='none';
-  document.getElementById('festivalPage').style.display='block';
-  document.getElementById('festivalTitle').textContent="Great People Jayanti";
-  document.getElementById('festivalDesc').textContent="Birth anniversaries of legendary personalities.";
-  const vg=document.getElementById('videoGrid');
-  const cg=document.getElementById('cardGrid');
-  vg.innerHTML=''; cg.innerHTML='';
-  Object.keys(JAYANTI_DAYS).forEach(person=>{
-    const f=JAYANTI_DAYS[person];
-    f.videos.forEach(v=>{
-      vg.innerHTML+=`<div class='video-card'><video controls src='media/${person}/${v}'></video>
-      <button class='btn' onclick="downloadFile('media/${person}/${v}')">Download</button>
-      <button class='btn share-btn' onclick="shareFile('media/${person}/${v}')">Share</button></div>`;
-    });
-    f.cards.forEach(c=>{
-      cg.innerHTML+=`<div class='card-item'><img src='media/${person}/${c}'>
-      <button class='btn' onclick="downloadFile('media/${person}/${c}')">Download</button>
-      <button class='btn share-btn' onclick="shareFile('media/${person}/${c}')">Share</button></div>`;
-    });
   });
 }
 
@@ -366,9 +309,45 @@ function openFestival(name){
   });
 }
 
-function filterFestivals(){
-  const q=document.getElementById('searchInput').value.toLowerCase();
-  const sec=document.getElementById('seasonSection');
-  sec.style.display='block';
-  document.getElementById('festivalPage').style.display='none';
-  sec.innerHTML=`<div class='season-title'>🔍 Results</div><div 
+function toggleIndex(){
+  const p=document.getElementById('indexPanel');
+  p.style.display = p.style.display==='block'?'none':'block';
+}
+
+function renderIndex(){
+  document.getElementById('indexList').innerHTML = Object.keys(FESTIVALS)
+    .map(n=>`<button class='btn alt' onclick="openFestival('${n}')">${n}</button>`)
+    .join('');
+}
+
+function downloadFile(u){
+  const a=document.createElement('a');
+  a.href=u;
+  a.download=u.split('/').pop();
+  a.click();
+}
+
+function shareFile(u){
+  if(navigator.share){
+    navigator.share({title:'Festival Wishes',url:u});
+  } else {
+    alert('Share not supported. Copy link: '+location.origin+'/'+u);
+  }
+}
+
+function goHome(){ renderHome(); }
+
+renderIndex();
+renderHome();
+
+for(let i=0;i<30;i++){
+  const s=document.createElement('div');
+  s.className='sprinkle';
+  s.style.left=Math.random()*100+'vw';
+  s.style.animationDuration=(2+Math.random()*3)+'s';
+  document.body.appendChild(s);
+}
+
+</script>
+</body>
+</html>
